@@ -1,2 +1,2 @@
-local key = "KEY-KOKEY"
+local key = "KEY-UPDATE"
 return key
