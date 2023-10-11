@@ -1,2 +1,2 @@
-local key = "KEY-KINI"
+local key = "KEY-OLAP"
 return key
