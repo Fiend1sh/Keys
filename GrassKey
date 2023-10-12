@@ -1,2 +1,2 @@
-local key = "KEY-UPDATE"
+local key = "KEY-CHAMPIONS"
 return key
