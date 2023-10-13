@@ -1,2 +1,2 @@
-local key = "KEY-DOKEY"
+local key = "KEY-OMSIM"
 return key
