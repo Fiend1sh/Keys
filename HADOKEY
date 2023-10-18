@@ -1,2 +1,2 @@
-local key = "KEY-HADO"
+local key = "KEY-THIS"
 return key
