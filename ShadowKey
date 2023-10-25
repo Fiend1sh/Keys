@@ -1,2 +1,2 @@
-local key = "KEY-ONCE"
+local key = "KEY-KAMISHI"
 return key
