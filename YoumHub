@@ -2510,7 +2510,7 @@ CamShake:Stop()
     end
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Youm Hub", HidePremium = false, IntroText = "", SaveConfig = true, ConfigFolder = "Youm Hub"})
+local Window = OrionLib:MakeWindow({Name = "Youm Hub", HidePremium = false, IntroText = "", SaveConfig = false, ConfigFolder = "Youm Hub"})
 
 OrionLib:MakeNotification({
 	Name = "Youm Hub",
