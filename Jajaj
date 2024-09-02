@@ -97,36 +97,54 @@ task.spawn(function()
 	end
 end)
 
+local UserInputService = game:GetService("UserInputService")
+
 local function MakeDraggable(DragPoint, Main)
 	pcall(function()
-		local Dragging, DragInput, MousePos, FramePos = true
-		AddConnection(DragPoint.InputBegan, function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+		local Dragging, DragInput, MousePos, FramePos
+		
+		-- Begin dragging when the user begins touching or clicking
+		local function OnInputBegan(Input)
+			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
 				Dragging = true
 				MousePos = Input.Position
 				FramePos = Main.Position
 
+				-- Detect when the input ends
 				Input.Changed:Connect(function()
 					if Input.UserInputState == Enum.UserInputState.End then
-						Dragging = true
+						Dragging = false
 					end
 				end)
 			end
-		end)
-		AddConnection(DragPoint.InputChanged, function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseMovement then
+		end
+
+		-- Update drag input
+		local function OnInputChanged(Input)
+			if Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch then
 				DragInput = Input
 			end
-		end)
-		AddConnection(UserInputService.InputChanged, function(Input)
+		end
+
+		-- Handle dragging
+		local function OnInputChangedGlobal(Input)
 			if Input == DragInput and Dragging then
 				local Delta = Input.Position - MousePos
-				TweenService:Create(Main, TweenInfo.new(0.05, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position  = UDim2.new(FramePos.X.Scale,FramePos.X.Offset + Delta.X, FramePos.Y.Scale, FramePos.Y.Offset + Delta.Y)}):Play()
-				Main.Position  = UDim2.new(FramePos.X.Scale,FramePos.X.Offset + Delta.X, FramePos.Y.Scale, FramePos.Y.Offset + Delta.Y)
+				Main.Position = UDim2.new(
+					FramePos.X.Scale,
+					FramePos.X.Offset + Delta.X,
+					FramePos.Y.Scale,
+					FramePos.Y.Offset + Delta.Y
+				)
 			end
-		end)
+		end
+
+		-- Connect events
+		AddConnection(DragPoint.InputBegan, OnInputBegan)
+		AddConnection(DragPoint.InputChanged, OnInputChanged)
+		AddConnection(UserInputService.InputChanged, OnInputChangedGlobal)
 	end)
-end    
+end 
 
 local function Create(Name, Properties, Children)
 	local Object = Instance.new(Name)
